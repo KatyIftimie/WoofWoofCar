@@ -36,5 +36,5 @@ public class User {
 
     @Transient
     @OneToMany(mappedBy = "user")
-    private List<Ride> taskList = new ArrayList<>();
+    private List<Ride> rideList = new ArrayList<>();
 }

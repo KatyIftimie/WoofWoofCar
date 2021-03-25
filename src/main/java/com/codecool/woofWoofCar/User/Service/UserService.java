@@ -26,13 +26,15 @@ public class UserService {
     public User getUserByEmail(String email) { return userRepository.getByEmail(email);}
     public User getUserById(long userId) {return userRepository.getByUserId(userId);}
 
-    public ResponseEntity<String> register (RegisterRequest request) {
+    public boolean register (RegisterRequest request) {
+        boolean registered = false;
         ResponseEntity<String> validation = validateRegister(request);
         if (validation.getStatusCode().equals(HttpStatus.OK)) {
             User newUser = createUser(request);
             userRepository.save(newUser);
+            registered = true;
         }
-        return validation;
+        return registered;
     }
 
 
@@ -64,13 +66,15 @@ public class UserService {
         return user;
     }
 
-    public ResponseEntity<String> login(LoginRequest request, HttpSession session) {
+    public boolean login(LoginRequest request, HttpSession session) {
+        boolean loggedIn = false;
         ResponseEntity<String> validation = validateLogin(request);
         if (validation.getStatusCode().equals(HttpStatus.OK)) {
             User user = getUserByEmail(request.getEmail());
             session.setAttribute("user", user);
+            loggedIn = true;
         }
-        return validation;
+        return loggedIn;
     }
 
     private ResponseEntity<String> validateLogin (LoginRequest request) {

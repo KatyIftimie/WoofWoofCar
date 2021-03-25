@@ -45,8 +45,8 @@ public class RideController {
     }
 
     @PostMapping("/add-ride")
-    public ResponseEntity<String> addRide(@RequestBody RideRequest request) {
+    public ResponseEntity<Ride> addRide(@RequestBody RideRequest request) {
         Ride addedRide=rideService.addRide(request);
-        return new ResponseEntity<>(Long.toString(addedRide.getRideId()), HttpStatus.CREATED);
+        return new ResponseEntity<>(addedRide, HttpStatus.CREATED);
     }
 }
