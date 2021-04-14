@@ -16,6 +16,37 @@ public class DataInsertion {
     AnimalTypeRepository animalTypeRepository;
     BookingStatusRepository bookingStatusRepository;
 
+    public void addAnimalData() {
+        AnimalType a1 = new AnimalType();
+        a1.setName(AnimalType.AnimalTypes.CAT);
+        animalTypeRepository.save(a1);
+
+        AnimalType a2 = new AnimalType();
+        a2.setName(AnimalType.AnimalTypes.SMALL_DOG);
+        animalTypeRepository.save(a2);
+
+        AnimalType a3 = new AnimalType();
+        a3.setName(AnimalType.AnimalTypes.MEDIUM_DOG);
+        animalTypeRepository.save(a3);
+
+        AnimalType a4 = new AnimalType();
+        a4.setName(AnimalType.AnimalTypes.LARGE_DOG);
+        animalTypeRepository.save(a4);
+
+        AnimalType a5 = new AnimalType();
+        a5.setName(AnimalType.AnimalTypes.BIRD);
+        animalTypeRepository.save(a5);
+
+
+        AnimalType a6 = new AnimalType();
+        a6.setName(AnimalType.AnimalTypes.RODENT);
+        animalTypeRepository.save(a6);
+
+        AnimalType a7 = new AnimalType();
+        a7.setName(AnimalType.AnimalTypes.ANY);
+        animalTypeRepository.save(a7);
+    }
+
     public void addData1() {
         CarType c1= new CarType();
         c1.setName(CarType.CarTypes.BREAK);
@@ -29,17 +60,7 @@ public class DataInsertion {
         c3.setName(CarType.CarTypes.SMALL);
         carTypeRepository.save(c3);
 
-        AnimalType a1 = new AnimalType();
-        a1.setName(AnimalType.AnimalTypes.CAT);
-        animalTypeRepository.save(a1);
 
-        AnimalType a2 = new AnimalType();
-        a2.setName(AnimalType.AnimalTypes.DOG);
-        animalTypeRepository.save(a2);
-
-        AnimalType a3 = new AnimalType();
-        a3.setName(AnimalType.AnimalTypes.OTHER);
-        animalTypeRepository.save(a3);
 
         BookingStatus b1 = new BookingStatus();
         b1.setName(BookingStatus.Status.BOOKED);

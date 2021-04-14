@@ -15,4 +15,7 @@ public class DataInsertionController {
     public void addData() {
         dataInsertion.addData1();
     }
+
+    @GetMapping("/add-animal-data")
+    public void addAnimalData() {dataInsertion.addAnimalData();}
 }

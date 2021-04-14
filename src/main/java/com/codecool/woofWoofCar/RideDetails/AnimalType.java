@@ -17,7 +17,13 @@ import javax.validation.constraints.NotNull;
 public class AnimalType {
 
     public enum AnimalTypes {
-        DOG, CAT, OTHER
+        SMALL_DOG,
+        MEDIUM_DOG,
+        LARGE_DOG,
+        CAT,
+        BIRD,
+        RODENT,
+        ANY
     }
 
     @Id
