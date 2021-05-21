@@ -47,4 +47,5 @@ public class BookingService {
     public List<Booking> getAllBookingsByUser(User user) { return bookingRepository.findAllByUser(user);}
     public List<Booking> getAllBookingsByRide(Ride ride) { return bookingRepository.findAllByRide(ride);}
 
+
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/user")
@@ -21,25 +22,36 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping
+    public boolean welcome() {
+        return true;
+    }
+
     @PostMapping("/register")
     public boolean registerUser(@RequestBody RegisterRequest request) {
         return userService.register(request);
     }
 
     @PostMapping("/login")
-    public boolean loginUser(@RequestBody LoginRequest request, HttpSession session) {
-        return userService.login(request, session);
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest request, HttpServletResponse response) {
+        return userService.login(request, response);
     }
 
     @GetMapping("/logout")
     public void logoutUser(HttpSession session, HttpServletResponse response) throws IOException {
         session.removeAttribute("user");
-        response.sendRedirect("/login");
+        response.sendRedirect("/");
     }
 
     @GetMapping("/get-user/{email}")
     public Optional<User> getUserByEmail(@PathVariable String email) {
-            Optional<User> user = Optional.ofNullable(userService.getUserByEmail(email));
+            Optional<User> user = userService.getUserByEmail(email);
             return user;
     }
+
+//    @GetMapping("/{email}")
+//    public Optional<User> getUserForAuth(@PathVariable String email) {
+//        Optional<User> user = userService.getUserByEmail(email);
+//        return user;
+//    }
 }

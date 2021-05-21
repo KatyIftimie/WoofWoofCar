@@ -1,12 +1,11 @@
 package com.codecool.woofWoofCar.Ride;
 
-import com.codecool.woofWoofCar.RideDetails.AnimalType;
-import com.codecool.woofWoofCar.RideDetails.AnimalTypeRepository;
-import com.codecool.woofWoofCar.RideDetails.CarType;
-import com.codecool.woofWoofCar.RideDetails.CarTypeRepository;
+import com.codecool.woofWoofCar.Booking.BookingRepository;
+import com.codecool.woofWoofCar.RideDetails.*;
 import com.codecool.woofWoofCar.User.Model.User;
 import com.codecool.woofWoofCar.User.Service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +18,11 @@ public class RideService {
 
     RideRepository rideRepository;
     AnimalTypeRepository animalTypeRepository;
+    AnimalTypeService animalTypeService;
     CarTypeRepository carTypeRepository;
     UserService userService;
+    BookingRepository bookingRepository;
+//    RideRequest rideRequest;
 
 
     @Transactional
@@ -42,16 +44,26 @@ public class RideService {
     }
 
     public Ride addRide(RideRequest request) {
+        System.out.println("eeee");
         Ride ride = new Ride();
         ride.setDeparture(request.getDeparture());
         ride.setArrival(request.getArrival());
         ride.setDepartureTime(request.getDepartureTime());
         ride.setUser(userService.getUserById(request.getUserId()));
-        ride.setAnimalType(getAnimalTypeById(request.getAnimalTypeId()));
+
+        request.getAnimalTypeIds().forEach(ID -> {
+            AnimalType animalType = animalTypeService.getAnimalTypeById(ID);
+            System.out.println("row 54");
+            ride.addAnimalType(animalType);
+        });
+
+
+//        ride.setAnimalType(getAnimalTypeById(request.getAnimalTypeId()));
         ride.setCarType(getCarTypeById(request.getCarTypeId()));
         ride.setSeatsAvailable(request.getSeatsAvailable());
         ride.setPricePerSeat(request.getPricePerSeat());
         return rideRepository.save(ride);
+
     }
 
     public Ride getRideById(long id) {return rideRepository.getByRideId(id);}
@@ -60,5 +72,11 @@ public class RideService {
     }
     public List<Ride> getRidesByUser(User user) {
         return rideRepository.findAllByUser(user);
+    }
+
+
+    public void deleteRideById(long id) {
+        bookingRepository.deleteBookingByRideId(id);
+        rideRepository.deleteRideByRideId(id);
     }
 }

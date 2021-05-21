@@ -22,8 +22,7 @@ public class AnimalType {
         LARGE_DOG,
         CAT,
         BIRD,
-        RODENT,
-        ANY
+        RODENT
     }
 
     @Id

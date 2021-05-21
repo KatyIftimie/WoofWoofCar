@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/ride")
@@ -48,5 +48,11 @@ public class RideController {
     public ResponseEntity<Ride> addRide(@RequestBody RideRequest request) {
         Ride addedRide=rideService.addRide(request);
         return new ResponseEntity<>(addedRide, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{rideId}")
+    public ResponseEntity<?> deleteRide(@PathVariable("id") long rideId) {
+        rideService.deleteRideById(rideId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

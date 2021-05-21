@@ -13,6 +13,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,13 +56,21 @@ public class Ride {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @Transient
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_type_id", referencedColumnName = "animalId")
-    private AnimalType animalType;
+    private List<AnimalType> animalTypes = new ArrayList<>();
+
+//    @Transient
+//    @OneToMany(mappedBy = "user")
+//    private List<Ride> rideList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_type_id", referencedColumnName = "carId")
     private CarType carType;
 
 
+    public void addAnimalType(AnimalType animalType) {
+        animalTypes.add(animalType);
+    }
 }

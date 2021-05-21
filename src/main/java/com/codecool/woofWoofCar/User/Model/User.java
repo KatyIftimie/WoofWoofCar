@@ -1,6 +1,7 @@
 package com.codecool.woofWoofCar.User.Model;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.codecool.woofWoofCar.Ride.Ride;
@@ -22,17 +23,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
-    @NotNull private String firstName;
+    @NotNull @NotBlank private String firstName;
 
-    @NotNull private String lastName;
+    @NotNull @NotBlank private String lastName;
 
-    @NotNull @Email
+    @NotNull @NotBlank @Email
     @Column(unique = true) private String email;
 
-    @NotNull private String phoneNo;
+    @NotNull @NotBlank private String phoneNo;
 
-    @NotNull private String password;
+    @NotNull @NotBlank
+    private String password;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name= "user_type", referencedColumnName = "userTypeId")
+    private UserType type;
+
+    public List<String> getRoles() {
+        List<String> roles = new ArrayList<>();
+        roles.add(getType().getName().toString());
+        return roles;
+    }
+//    @NotNull @NotBlank private String role = "REGULAR";
 
     @Transient
     @OneToMany(mappedBy = "user")

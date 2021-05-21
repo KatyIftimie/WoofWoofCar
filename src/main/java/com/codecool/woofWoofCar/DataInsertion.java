@@ -6,6 +6,8 @@ import com.codecool.woofWoofCar.RideDetails.AnimalType;
 import com.codecool.woofWoofCar.RideDetails.AnimalTypeRepository;
 import com.codecool.woofWoofCar.RideDetails.CarType;
 import com.codecool.woofWoofCar.RideDetails.CarTypeRepository;
+import com.codecool.woofWoofCar.User.Model.UserType;
+import com.codecool.woofWoofCar.User.Repository.UserTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class DataInsertion {
     CarTypeRepository carTypeRepository;
     AnimalTypeRepository animalTypeRepository;
     BookingStatusRepository bookingStatusRepository;
+    UserTypeRepository userTypeRepository;
 
     public void addAnimalData() {
         AnimalType a1 = new AnimalType();
@@ -41,13 +44,24 @@ public class DataInsertion {
         AnimalType a6 = new AnimalType();
         a6.setName(AnimalType.AnimalTypes.RODENT);
         animalTypeRepository.save(a6);
-
-        AnimalType a7 = new AnimalType();
-        a7.setName(AnimalType.AnimalTypes.ANY);
-        animalTypeRepository.save(a7);
+//
+//        AnimalType a7 = new AnimalType();
+//        a7.setName(AnimalType.AnimalTypes.ANY);
+//        animalTypeRepository.save(a7);
     }
 
     public void addData1() {
+
+        UserType u1 = new UserType();
+        u1.setName(UserType.UserTypeRoles.ADMIN);
+        u1.setDescription("Moderates user issues, deletes rides");
+        userTypeRepository.save(u1);
+
+        UserType u2 = new UserType();
+        u2.setName(UserType.UserTypeRoles.REGULAR);
+        u2.setDescription("Adds or books a ride, notify issues to admin");
+        userTypeRepository.save(u2);
+
         CarType c1= new CarType();
         c1.setName(CarType.CarTypes.BREAK);
         carTypeRepository.save(c1);
@@ -79,4 +93,6 @@ public class DataInsertion {
         b4.setName(BookingStatus.Status.AWAITING);
         bookingStatusRepository.save(b4);
     }
+
+
 }
