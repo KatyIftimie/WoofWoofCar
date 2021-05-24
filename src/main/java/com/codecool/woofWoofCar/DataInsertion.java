@@ -44,10 +44,7 @@ public class DataInsertion {
         AnimalType a6 = new AnimalType();
         a6.setName(AnimalType.AnimalTypes.RODENT);
         animalTypeRepository.save(a6);
-//
-//        AnimalType a7 = new AnimalType();
-//        a7.setName(AnimalType.AnimalTypes.ANY);
-//        animalTypeRepository.save(a7);
+
     }
 
     public void addData1() {

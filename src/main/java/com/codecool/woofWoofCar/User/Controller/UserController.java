@@ -49,9 +49,4 @@ public class UserController {
             return user;
     }
 
-//    @GetMapping("/{email}")
-//    public Optional<User> getUserForAuth(@PathVariable String email) {
-//        Optional<User> user = userService.getUserByEmail(email);
-//        return user;
-//    }
 }

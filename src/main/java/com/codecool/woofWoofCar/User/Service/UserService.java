@@ -42,18 +42,13 @@ public class UserService {
 
     public Optional<User> getUserByEmail(String email) { return userRepository.getByEmail(email);}
     public User getUserById(long userId) {return userRepository.getByUserId(userId);}
-//    public Boolean emailExists(String email) {
-//        return userRepository.existsByEmail(email);
-//    }
-//    public User getUserByUserType(String role) {return userRepository.getUserByRole(role);
-//    }
+
 
     public boolean register (RegisterRequest request) {
         boolean registered = false;
         ResponseEntity<String> validation = validateRegister(request);
         if (validation.getStatusCode().equals(HttpStatus.OK)) {
             User newUser = createUser(request);
-//            System.out.println(newUser + "eeee");
             userRepository.save(newUser);
             registered = true;
         }
@@ -75,38 +70,24 @@ public class UserService {
 
     private User createUser(RegisterRequest request) {
         User user = new User();
-//        UserType userType = userTypeRepository.getOne(Long.valueOf(request.getUserTypeID()));
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhoneNo(request.getPhoneNo());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-//        user.setType(userTypeRepository.getOne(Long.valueOf()));
         user.setType(userTypeRepository.getOne(Long.valueOf(2)));
-//        System.out.println("Created user: " + user);
         return user;
     }
 
     public ResponseEntity<?> login(LoginRequest request, HttpServletResponse response) {
-//        boolean loggedIn = false;
-//        ResponseEntity<String> validation = validateLogin(request);
-//        if (validation.getStatusCode().equals(HttpStatus.OK)) {
-//            Optional<User> user = getUserByEmail(request.getEmail());
-//            session.setAttribute("user", user);
-//            loggedIn = true;
-//        }
-//        return loggedIn;
+
         try {
             String email = request.getEmail();
-            System.out.println("Email : " + email + " and pass: " + request.getPassword());
-//            System.out.println("eee " + new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            System.out.println("uuuuu" + authentication);
             List<String> roles = authentication.getAuthorities()
                     .stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
-            System.out.println("Roles: " + roles);
             String token = jwtTokenServices.createToken(email, roles);
 
             Map<Object, Object> model = new HashMap<>();
@@ -120,9 +101,6 @@ public class UserService {
 
             return ResponseEntity.ok(model);
         }catch (AuthenticationException e) {
-//            throw e;
-            System.out.println("pulaaaa");
-//            e.printStackTrace();
             throw e;
         }
     }

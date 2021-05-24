@@ -5,11 +5,9 @@ import com.codecool.woofWoofCar.RideDetails.*;
 import com.codecool.woofWoofCar.User.Model.User;
 import com.codecool.woofWoofCar.User.Service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -22,7 +20,6 @@ public class RideService {
     CarTypeRepository carTypeRepository;
     UserService userService;
     BookingRepository bookingRepository;
-//    RideRequest rideRequest;
 
 
     @Transactional
@@ -39,12 +36,8 @@ public class RideService {
         return animalTypeRepository.findAll();
     }
 
-    public AnimalType getAnimalTypeById(long id) {
-        return animalTypeRepository.getOne(id);
-    }
 
     public Ride addRide(RideRequest request) {
-        System.out.println("eeee");
         Ride ride = new Ride();
         ride.setDeparture(request.getDeparture());
         ride.setArrival(request.getArrival());
@@ -53,12 +46,10 @@ public class RideService {
 
         request.getAnimalTypeIds().forEach(ID -> {
             AnimalType animalType = animalTypeService.getAnimalTypeById(ID);
-            System.out.println("row 54");
             ride.addAnimalType(animalType);
         });
 
 
-//        ride.setAnimalType(getAnimalTypeById(request.getAnimalTypeId()));
         ride.setCarType(getCarTypeById(request.getCarTypeId()));
         ride.setSeatsAvailable(request.getSeatsAvailable());
         ride.setPricePerSeat(request.getPricePerSeat());
