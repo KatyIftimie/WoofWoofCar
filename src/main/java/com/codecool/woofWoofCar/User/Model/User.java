@@ -8,6 +8,7 @@ import com.codecool.woofWoofCar.Ride.Ride;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,10 @@ public class User {
 
     @NotNull @NotBlank
     private String password;
+
+    private String aboutMe;
+    private LocalDate birthDate;
+    private String sex;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "user_type", referencedColumnName = "userTypeId")

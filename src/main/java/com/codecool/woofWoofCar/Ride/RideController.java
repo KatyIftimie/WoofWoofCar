@@ -37,7 +37,7 @@ public class RideController {
         return rideService.getAllCarTypes();
     }
 
-    @Transactional
+//    @Transactional
     @GetMapping("/rides/{userId}")
     public List<Ride> getUsersRides(@PathVariable("userId") long userId) {
         User user= userService.getUserById(userId);

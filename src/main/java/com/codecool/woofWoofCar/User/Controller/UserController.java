@@ -5,6 +5,7 @@ import com.codecool.woofWoofCar.User.Request.LoginRequest;
 import com.codecool.woofWoofCar.User.Request.RegisterRequest;
 import com.codecool.woofWoofCar.User.Service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,4 +50,9 @@ public class UserController {
             return user;
     }
 
+    @PutMapping("/update-user")
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        User updateUser = userService.updateUser(user);
+        return new ResponseEntity<>(updateUser, HttpStatus.OK);
+    }
 }

@@ -23,10 +23,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,11 +73,17 @@ public class UserService {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhoneNo(request.getPhoneNo());
+        user.setAboutMe(request.getAboutMe());
+        user.setBirthDate(request.getBirthDate());
+        user.setSex(request.getSex());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setType(userTypeRepository.getOne(Long.valueOf(2)));
         return user;
     }
 
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
     public ResponseEntity<?> login(LoginRequest request, HttpServletResponse response) {
 
         try {
@@ -98,6 +102,7 @@ public class UserService {
             cookie.setMaxAge(604800000);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
+
 
             return ResponseEntity.ok(model);
         }catch (AuthenticationException e) {
